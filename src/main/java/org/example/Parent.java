@@ -7,11 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(name = "child", value = Child.class)
 })
-public class Parent extends GrandParent {
+public class Parent {
     private final String parentProp;
 
     public Parent(String grandParentProp, String parentProp) {
-        super(grandParentProp);
         this.parentProp = parentProp;
     }
 
