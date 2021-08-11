@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /:
+    get:
+      tags:
+      - parent-controller
+      operationId: getObjects
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  oneOf:
+                  - $ref: '#/components/schemas/Parent'
+                  - $ref: '#/components/schemas/Child'
+                  - $ref: '#/components/schemas/OtherChild'
+components:
+  schemas:
+    Child:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Parent'
+      - type: object
+        properties:
+          childProp:
+            type: string
+    OtherChild:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Parent'
+        - type: object
+          properties:
+            otherChildProp:
+              type: string
+    Parent:
+      required:
+      - type
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/GrandParent'
+        - type: object
+          properties:
+            parentProp:
+              type: string
+            type:
+              type: string
+      discriminator:
+        propertyName: type
+        mapping: 
+          child: '#/components/schemas/Child'
+          otherChild: '#/components/schemas/OtherChild'
+    GrandParent:
+      type: object
+      properties:
+        grandParentProp:
+          type: string
