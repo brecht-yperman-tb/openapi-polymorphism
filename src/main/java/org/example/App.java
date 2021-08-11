@@ -1,6 +1,7 @@
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.core.jackson.ModelResolver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -19,5 +20,10 @@ public class App {
     @Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper();
+    }
+    
+    @Bean
+    public ModelResolver customModelResolver(ObjectMapper objectMapper) {
+        return new CustomModelResolver(objectMapper);
     }
 }
